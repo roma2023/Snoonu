@@ -13,7 +13,9 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
-  turbopack: {},
+  experimental: {
+    allowedDevOrigins: ["172.20.99.47:3000", "localhost:3000"],
+  },
   webpack: (config) => {
     config.watchOptions = {
       ...config.watchOptions,
