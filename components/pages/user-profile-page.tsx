@@ -3,7 +3,7 @@
 import { useState } from "react"
 import { useApp } from "@/lib/app-context"
 import { recommendations } from "@/lib/data"
-import { ChevronLeft, MoreHorizontal, MessageCircle, Grid3X3, Bookmark, BadgeCheck } from "lucide-react"
+import { ChevronLeft, MoreHorizontal, MessageCircle, Grid3X3, BadgeCheck } from "lucide-react"
 
 export function UserProfilePage() {
   const { state, updateState } = useApp()
@@ -151,29 +151,16 @@ export function UserProfilePage() {
         </div>
       </div>
 
-      {/* Tabs */}
-      <div className="flex border-t border-border">
-        <button
-          onClick={() => setActiveTab("posts")}
-          className={`flex-1 py-3 flex items-center justify-center gap-2 border-b-2 ${
-            activeTab === "posts" ? "border-foreground" : "border-transparent"
-          }`}
-        >
-          <Grid3X3 className={`w-5 h-5 ${activeTab === "posts" ? "text-foreground" : "text-muted-foreground"}`} />
-        </button>
-        <button
-          onClick={() => setActiveTab("saved")}
-          className={`flex-1 py-3 flex items-center justify-center gap-2 border-b-2 ${
-            activeTab === "saved" ? "border-foreground" : "border-transparent"
-          }`}
-        >
-          <Bookmark className={`w-5 h-5 ${activeTab === "saved" ? "text-foreground" : "text-muted-foreground"}`} />
-        </button>
+      {/* Tabs / Posts Indicator */}
+      <div className="flex border-t border-border justify-center">
+        <div className="py-3 flex items-center justify-center gap-2 border-b-2 border-foreground px-12">
+          <Grid3X3 className="w-5 h-5 text-foreground" />
+        </div>
       </div>
 
       {/* Posts Grid */}
-      <div className="grid grid-cols-3 gap-0.5 flex-1">
-        {(activeTab === "posts" ? userPosts : userPosts.slice(0, 3)).map((post, index) => (
+      <div className="grid grid-cols-3 gap-0.5 flex-1 content-start">
+        {userPosts.map((post, index) => (
           <button
             key={post.id || index}
             onClick={() =>

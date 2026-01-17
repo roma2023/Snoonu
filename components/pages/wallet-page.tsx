@@ -7,13 +7,13 @@ import { Chip } from "@/components/ui/chip"
 import { ChevronLeft, HelpCircle, FileText, ArrowLeftRight, Clock, Check } from "lucide-react"
 
 const transactions = [
-  { id: "1", name: "KFC", amount: 800, status: "confirmed", type: "SnooCircle referral", date: "Today" },
-  { id: "2", name: "Burger Boutique", amount: 1200, status: "pending", type: "SnooCircle referral", date: "Today" },
-  { id: "3", name: "Red Cream Sweets", amount: 400, status: "confirmed", type: "First order bonus", date: "Yesterday" },
+  { id: "1", name: "KFC", amount: 38, status: "confirmed", type: "SnooCircle referral", date: "Today" },
+  { id: "2", name: "Burger Boutique", amount: 40, status: "pending", type: "SnooCircle referral", date: "Today" },
+  { id: "3", name: "Red Cream Sweets", amount: 100, status: "confirmed", type: "First order bonus", date: "Yesterday" },
   {
     id: "4",
     name: "Captain Shawarma",
-    amount: 600,
+    amount: 20,
     status: "confirmed",
     type: "SnooCircle referral",
     date: "Yesterday",
@@ -21,10 +21,9 @@ const transactions = [
 ]
 
 const redeemOffers = [
-  { id: "1", name: "Captain Shawarma", discount: "8 QAR Off", coins: 800, image: "/shawarma-wrap.jpg" },
-  { id: "2", name: "Namous", discount: "5 QAR Off", coins: 500, image: "/arabic-dessert.jpg" },
-  { id: "3", name: "KFC", discount: "10 QAR Off", coins: 1000, image: "/crispy-fried-chicken.png" },
-  { id: "4", name: "Free Delivery", discount: "Delivery Fee", coins: 300, image: "/delivery-icon.png" },
+  { id: "1", name: "Captain Shawarma", discount: "8 QAR Off", coins: 38, image: "/shawarma-wrap.jpg" },
+  { id: "2", name: "Namous", discount: "5 QAR Off", coins: 28, image: "/arabic-dessert.jpg" },
+  { id: "3", name: "KFC", discount: "10 QAR Off", coins: 28, image: "/crispy-fried-chicken.png" },
 ]
 
 export function WalletPage() {
@@ -61,8 +60,8 @@ export function WalletPage() {
       <div className="px-4 py-4">
         <div className="bg-gradient-to-r from-zinc-900 to-zinc-700 rounded-2xl p-5 text-white">
           <div className="flex items-center gap-3 mb-4">
-            <div className="w-10 h-10 rounded-full bg-snoonu-gold flex items-center justify-center">
-              <span className="text-white text-lg font-bold">S</span>
+            <div className="w-10 h-10 rounded-full flex items-center justify-center overflow-hidden">
+              <img src="/snoocoin.png" alt="SnooCoin" className="w-full h-full object-cover" />
             </div>
             <div>
               <p className="text-sm opacity-80">Your SnooCoins balance</p>
@@ -95,7 +94,7 @@ export function WalletPage() {
       {/* Transactions - Removed QAR equivalents from transaction amounts */}
       <div className="bg-muted/50 flex-1">
         <div className="px-4 py-3 flex items-center justify-between">
-          <h2 className="text-lg font-bold">Transactions</h2>
+          <h2 className="text-lg font-bold ml-2">Transactions</h2>
           <div className="flex gap-2">
             <Chip label="All" active={activeFilter === "all"} onClick={() => setActiveFilter("all")} />
             <Chip
@@ -152,8 +151,8 @@ export function WalletPage() {
                   <div className="p-3">
                     <p className="font-semibold">{offer.discount}</p>
                     <div className="flex items-center gap-1 mt-1">
-                      <div className="w-4 h-4 rounded-full bg-snoonu-gold flex items-center justify-center">
-                        <span className="text-white text-xs font-bold">S</span>
+                      <div className="w-4 h-4 rounded-full flex items-center justify-center overflow-hidden">
+                         <img src="/snoocoin.png" alt="SnooCoin" className="w-full h-full object-cover" />
                       </div>
                       <span className="text-sm font-medium">{offer.coins.toLocaleString()} coins</span>
                     </div>

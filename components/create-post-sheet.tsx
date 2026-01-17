@@ -90,6 +90,7 @@ export function CreatePostSheet() {
           </div>
         </div>
 
+        <h3 className="text-md font-bold">Today's Orders</h3>
         {/* Selected Restaurant */}
         {selectedRestaurant && (
           <div className="bg-muted rounded-2xl p-3">

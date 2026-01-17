@@ -215,7 +215,7 @@ function FeedView() {
                    <Plus className="w-6 h-6 text-snoonu-red" />
                 </div>
               )}
-              <span className="text-xs font-medium text-snoonu-red">Hasan Jobs</span>
+              <span className="text-xs font-medium text-snoonu-red">Add Story</span>
             </button>
 
             {/* Friend Stories */}

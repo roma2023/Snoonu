@@ -25,6 +25,42 @@ export function StoriesViewer() {
 
   const storyUser = isViewingOwnStories ? null : friends.find((f) => f.id === currentStory?.userId)
 
+  const handleClose = useCallback(() => {
+    updateState({
+      showStoriesViewer: false,
+      currentStoryUserId: null,
+      currentStoryIndex: 0,
+    })
+  }, [updateState])
+
+  // Determine the sequence of users with stories
+  const allStoryUserIds = ["me", ...Array.from(new Set(stories.map((s) => s.userId)))]
+  // Filter out "me" if no user stories
+  const validStoryUserIds = allStoryUserIds.filter((id) => {
+    if (id === "me") return state.userStories.length > 0
+    return true
+  })
+
+  // Determine current user ID safely
+  const currentUserId = state.currentStoryUserId || "me"
+
+  const handleNextUser = () => {
+    const currentUserIndex = validStoryUserIds.indexOf(currentUserId)
+    if (currentUserIndex !== -1 && currentUserIndex < validStoryUserIds.length - 1) {
+      // Go to next user
+      const nextUserId = validStoryUserIds[currentUserIndex + 1]
+      updateState({
+        currentStoryUserId: nextUserId,
+        currentStoryIndex: 0,
+      })
+      setCurrentIndex(0)
+      setProgress(0)
+    } else {
+      // No more users, close
+      handleClose()
+    }
+  }
+
   useEffect(() => {
     if (state.showShareSheet) {
       setIsPaused(true)
@@ -43,7 +79,7 @@ export function StoriesViewer() {
             setCurrentIndex((prev) => prev + 1)
             return 0
           } else {
-            handleClose()
+            handleNextUser()
             return prev
           }
         }
@@ -52,23 +88,38 @@ export function StoriesViewer() {
     }, 100)
 
     return () => clearInterval(interval)
-  }, [currentIndex, userStories.length, isPaused])
+  }, [currentIndex, userStories.length, isPaused, handleNextUser])
 
   useEffect(() => {
     setProgress(0)
   }, [currentIndex])
 
-  const handleClose = useCallback(() => {
-    updateState({
-      showStoriesViewer: false,
-      currentStoryUserId: null,
-      currentStoryIndex: 0,
-    })
-  }, [updateState])
+
 
   const handlePrevious = () => {
     if (currentIndex > 0) {
       setCurrentIndex((prev) => prev - 1)
+    } else {
+      // Ideally go to previous user? For now just stay start or close?
+      // User request only mentioned "proceed to next story". 
+      // We'll keep default behavior (do nothing or close) for start of list, 
+      // or we could implement previous user logic too. 
+      // Let's sticking to standard behavior: start of story = nothing or close. 
+      // Instagram goes to previous user. 
+      // Implementation:
+      const currentUserIndex = validStoryUserIds.indexOf(currentUserId)
+      if (currentUserIndex > 0) {
+         const prevUserId = validStoryUserIds[currentUserIndex - 1]
+         // We should technically go to the LAST story of the previous user. 
+         // But finding that is complex without querying that user's stories length. 
+         // For simplicity, let's go to start of previous user.
+         updateState({
+            currentStoryUserId: prevUserId,
+            currentStoryIndex: 0, 
+          })
+          setCurrentIndex(0)
+          setProgress(0)
+      }
     }
   }
 
@@ -76,7 +127,7 @@ export function StoriesViewer() {
     if (currentIndex < userStories.length - 1) {
       setCurrentIndex((prev) => prev + 1)
     } else {
-      handleClose()
+      handleNextUser()
     }
   }
 

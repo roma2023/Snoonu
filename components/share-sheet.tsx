@@ -232,8 +232,8 @@ export function ShareSheet() {
 
             {/* Reward hint */}
             <div className="bg-amber-50 rounded-2xl p-4 mb-4 flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full bg-snoonu-gold flex items-center justify-center">
-                <span className="text-white text-lg font-bold">S</span>
+              <div className="w-10 h-10 rounded-full flex items-center justify-center overflow-hidden">
+                <img src="/snoocoin.png" alt="SnooCoin" className="w-full h-full object-cover" />
               </div>
               <div>
                 <p className="font-semibold text-amber-800">You both earn SnooCoins</p>
